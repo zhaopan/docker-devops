@@ -1,0 +1,25 @@
+version: "2"
+services:
+  tmp-nginx:
+    image: nginx
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - core-network
+
+  tmp-mysql:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      - core-network
+
+networks:
+  core-network:
+    driver: bridge
