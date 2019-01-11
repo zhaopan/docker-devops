@@ -1,7 +1,8 @@
-version: "2"
+version: "3"
 services:
   nginx:
     image: nginx
+    container_name: nginx
     restart: always
     networks:
       - core-network
@@ -14,6 +15,7 @@ services:
 
   mysql:
     image: mysql
+    container_name: mysql
     restart: always
     networks:
       - core-network
@@ -29,7 +31,11 @@ services:
 
   gogs:
     image: gogs/gogs
+    container_name: gogs
     restart: always
+    depends_on:
+      - mysql
+      - nginx
     networks:
       - core-network
     ports:
