@@ -12,7 +12,7 @@ cd ..
 sudo tee /mnt/nginx/conf.d/gogs.conf <<-'EOF'
 server {
     listen       80;
-    server_name  git.webwebsite.com;
+    server_name  git.website.com;
     client_max_body_size 50m;
     location / {
         # 一定要注意这里是docker容器的内网地址+端口,以"/"结尾,不然会报错。
