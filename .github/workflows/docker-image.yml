@@ -43,5 +43,3 @@ jobs:
           push: true
           tags: |
             ${{ github.repository }}:0.0.3
-
-# ${{ github.repository }}:${{ date +%s }}
