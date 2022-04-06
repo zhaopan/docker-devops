@@ -1,8 +1,10 @@
 version: "3"
+
 networks:
   Vpc:
     external:
       name: Vpc01
+
 services:
   proxy:
     image: nginx
