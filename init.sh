@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # 初始化网络
-docker network create --subnet=172.18.0.0/16 Vpc01
+docker network create --subnet=172.18.0.0/16 devops_proxy

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/bash -e
 
 ##
 ## startup
 ##
 
-docker-compose up -d
+echo "startup is okay"
