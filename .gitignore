@@ -1,1 +1,6 @@
+redis/
+mysql/
+log/
+data/
+.env
 .DS_Store
