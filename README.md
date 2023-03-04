@@ -11,7 +11,7 @@ cp .env.example .env
 
 ```bash
 # 编译
-docker-compose build --no-cache <services-names>
+docker-compose build <services-names>
 ```
 
 ## run
@@ -28,7 +28,7 @@ docker-compose up -d <services-names>
 docker-compose restart <services-names>
 
 # 修改 dockerfile 或者 env 文件之后 rebuild 可生效
-docker-compose up -d --build --no-cache <services-names>
+docker-compose up -d --build <services-names>
 
 # 停止
 docker-compose stop

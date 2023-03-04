@@ -1,6 +1,7 @@
-redis/
 mysql/
 log/
+logs/
 data/
 .env
 .DS_Store
+www/
