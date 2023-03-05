@@ -1,0 +1,11 @@
+# 腾讯云内网
+deb http://mirrors.tencentyun.com/debian stretch main contrib non-free
+deb http://mirrors.tencentyun.com/debian stretch-updates main contrib non-free
+deb-src http://mirrors.tencentyun.com/debian stretch main contrib non-free
+deb-src http://mirrors.tencentyun.com/debian stretch-updates main contrib non-free
+
+# 腾讯云公网
+deb http://mirrors.cloud.tencent.com/debian stretch main contrib non-free
+deb http://mirrors.cloud.tencent.com/debian stretch-updates main contrib non-free
+deb-src http://mirrors.cloud.tencent.com/debian stretch main contrib non-free
+deb-src http://mirrors.cloud.tencent.com/debian stretch-updates main contrib non-free
