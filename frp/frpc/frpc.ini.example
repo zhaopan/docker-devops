@@ -1,0 +1,39 @@
+[common]
+# 填写服务器实际IP或解析该IP的某域名
+server_addr = 0.0.0.0
+# 填写服务器frps的主端口号，本示范中是6500
+server_port = 6500
+# 与frps.ini中的token要一一对应
+token = XsZ75UtIDuSD
+
+[ssh-3505]
+# 将服务端的3505端口连接到本地的22端口进行ssh连接
+type = tcp
+# 本地ip
+local_ip = 192.168.0.4
+# 你的ssh端口。默认是22。如果有自定义ssh端口，就写那个自定义端口。
+local_port = 22
+# frps开放的端口之一。我随便写了个3505。
+remote_port = 3505
+
+[http-www.sample.cn]
+# 测试http
+type = http
+# 本地ip
+local_ip = 192.168.0.4
+# 比如，某个Docker应用的端口号。Emby,jellyfin之类的有Web界面的应用。
+local_port = 6533
+custom_domains = httptest.sample.com
+
+[https-@.sample.cn]
+# 测试https
+type = https
+# 填写域名
+custom_domains = httpstest.sample.com
+plugin = https2http
+plugin_local_addr = 192.168.0.4:6533
+# HTTPS 证书相关的配置
+plugin_crt_path = /frp/sample.com.pem
+plugin_key_path = /frp/sample.com.key
+plugin_host_header_rewrite = 192.168.0.4
+plugin_header_X-From-Where = frp
