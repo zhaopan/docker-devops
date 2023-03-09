@@ -3,8 +3,13 @@
 ## init
 
 ```bash
-# 复制配置文件，然后根据自己需求修改配置文件
+# copy 配置文件，根据自己需求修改配置文件
 cp .env.example .env
+
+# 若需要安装frp，则要执行 frp/install.sh
+cd frp
+chmod +x install.sh
+sh install.sh
 ```
 
 ## build

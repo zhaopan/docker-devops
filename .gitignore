@@ -4,3 +4,6 @@ data/
 .env
 .DS_Store
 www/
+frpc.ini
+frps.ini
+frpd.lock

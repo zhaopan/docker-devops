@@ -78,8 +78,19 @@ services:
     container_name: frps
     privileged: true
     restart: always
+    ports:
+      - '6500:7000'
+      - '6501:7500'
+      - '6502:7001'
+      # http端口
+      - '6503:80'
+      # https端口
+      - '6504:443'
+      # 这里写自己要开放给frpc的端口
+      - '3505-3510:3505-3510'
     volumes:
       - ${FRPS_INI_PATH}:/etc/frp/frps.ini
+      #- ${FRP_LOG_PATH}:/var/log/frps.log
     networks:
       backend:
         ipv4_address: ${FRPS_IP}
