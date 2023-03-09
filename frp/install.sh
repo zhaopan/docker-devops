@@ -5,6 +5,9 @@ main(){
     then
         echo 'frpd is installed, please config !!!'
     else
+        mkdir -p ../logs/frps/ ../logs/frpc/
+        touch ../logs/frps/frps.log ../logs/frpc/frpc.log
+
         cp frps/frps.ini.example frps/frps.ini
         cp frpc/frpc.ini.example frpc/frpc.ini
 

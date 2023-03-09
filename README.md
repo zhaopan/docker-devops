@@ -12,6 +12,16 @@ chmod +x install.sh
 sh install.sh
 ```
 
+## services-names
+
+```bash
+# nginx 1.14
+# redis  4.x | 5.x(默认) | 6.x
+# mysql 5.7.40(默认) | 8.0
+# frps  0.47.0
+# frpc  0.47.0
+```
+
 ## build
 
 ```bash
@@ -41,7 +51,9 @@ docker-compose down
 docker-compose down --rmi all
 ```
 
-## Thanks
+## thanks
+
+[ogenes/docker-lnmp](https://github.com/ogenes/docker-lnmp)
 
 [fatedier/frp](https://github.com/fatedier/frp)
 
