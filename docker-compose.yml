@@ -113,6 +113,36 @@ services:
     networks:
       backend:
         ipv4_address: ${FRPC_IP}
+  ######## wordpress1 ########
+  wordpress1:
+    container_name: wordpress1
+    image: wordpress
+    privileged: true
+    restart: always
+    links:
+      - mysql
+    ports:
+      - '8081:80'
+    volumes:
+      - ${WP_ROOT_PATH1}:/var/www/html/
+    networks:
+      backend:
+        ipv4_address: ${WP_IP1}
+  ######## wordpress2 ########
+  wordpress2:
+    container_name: wordpress2
+    image: wordpress
+    privileged: true
+    restart: always
+    links:
+      - mysql
+    ports:
+      - '8082:80'
+    volumes:
+      - ${WP_ROOT_PATH2}:/var/www/html/
+    networks:
+      backend:
+        ipv4_address: ${WP_IP2}
 
 networks:
   backend:
