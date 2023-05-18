@@ -113,6 +113,19 @@ services:
     networks:
       backend:
         ipv4_address: ${FRPC_IP}
+  ######## wordpress ########
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    privileged: true
+    restart: always
+    links:
+      - mysql
+    ports:
+      - '80:80'
+    networks:
+      backend:
+        ipv4_address: ${WP_IP}
 
 networks:
   backend:
