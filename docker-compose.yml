@@ -123,6 +123,8 @@ services:
       - mysql
     ports:
       - '80:80'
+    volumes:
+      - ${WP_ROOT_PATH}:/var/www/html/
     networks:
       backend:
         ipv4_address: ${WP_IP}
