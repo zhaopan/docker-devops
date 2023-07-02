@@ -14,17 +14,17 @@ LABEL maintainer=${ZP_MAINTAINER}
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# 安装基础
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-  apt-utils \
-  curl \
-  sudo \
-  git \
-  vim \
-  wget \
-  net-tools \
-  && rm -rf /var/lib/apt/lists/*
+## 安装基础
+#RUN apt-get update \
+#  && apt-get install -y --no-install-recommends \
+#  apt-utils \
+#  curl \
+#  sudo \
+#  git \
+#  vim \
+#  wget \
+#  net-tools \
+#  && rm -rf /var/lib/apt/lists/*
 
 # 更改权限
 RUN mkdir /var/www \
