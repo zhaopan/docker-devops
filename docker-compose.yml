@@ -68,7 +68,7 @@ services:
       backend:
         ipv4_address: ${MYSQL_IP}
 
-  ######## frps ########
+######## frps ########
   frps:
     build:
       context: ./frp/frps/${FRPS_ARCH}
@@ -113,6 +113,7 @@ services:
     networks:
       backend:
         ipv4_address: ${FRPC_IP}
+
   ######## wordpress1 ########
   wordpress1:
     container_name: wordpress1
@@ -120,7 +121,7 @@ services:
     privileged: true
     restart: always
     depends_on:
-      - mysql    
+      - mysql
     links:
       - mysql
     ports:
@@ -130,6 +131,7 @@ services:
     networks:
       backend:
         ipv4_address: ${WP_IP1}
+
   ######## wordpress2 ########
   wordpress2:
     container_name: wordpress2
@@ -147,6 +149,75 @@ services:
     networks:
       backend:
         ipv4_address: ${WP_IP2}
+
+  ######## goapp110 ########
+  goapp110:
+    build:
+      context: ./golang
+      args:
+        - VERSION=${GO_VERSION}
+        - ZP_MAINTAINER=${ZP_MAINTAINER}
+    container_name: goapp110
+    environment:
+      - TZ=${GO_TIMEZONE}
+    privileged: true
+    restart: always
+
+    ports:
+      - '8000:80'
+    volumes:
+      - ${GO_APPPATH}:/var/www/goapp/
+    networks:
+      backend:
+        ipv4_address: ${GOAPP_IP10}
+
+  ######## goapp111 ########
+  goapp111:
+    build:
+      context: ./golang
+      args:
+        - VERSION=${GO_VERSION}
+        - ZP_MAINTAINER=${ZP_MAINTAINER}
+    container_name: goapp111
+    environment:
+      - TZ=${GO_TIMEZONE}
+    privileged: true
+    restart: always
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    ports:
+      - '8000:80'
+    volumes:
+      - ${GO_APPPATH}:/var/www/goapp/
+    networks:
+      backend:
+        ipv4_address: ${GOAPP_IP11}
+
+  ######## goapp112 ########
+  goapp112:
+    build:
+      context: ./golang
+      args:
+        - VERSION=${GO_VERSION}
+        - ZP_MAINTAINER=${ZP_MAINTAINER}
+    container_name: goapp112
+    environment:
+      - TZ=${GO_TIMEZONE}
+    privileged: true
+    restart: always
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    ports:
+      - '8000:80'
+    volumes:
+      - ${GO_APPPATH}:/var/www/goapp/
+    networks:
+      backend:
+        ipv4_address: ${GOAPP_IP12}
 
 networks:
   backend:
