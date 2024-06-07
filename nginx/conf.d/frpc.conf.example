@@ -1,7 +1,7 @@
 # http
 server {
     listen 80;
-    server_name frp.localhost.com;
+    server_name foo.<localhost>.com;
     location / {
         proxy_pass frps:80;
         proxy_redirect off;
@@ -14,7 +14,7 @@ server {
 # # https
 # server {
 #     listen 443;
-#     server_name frp.localhost.com;
+#     server_name foo.<localhost>.com;
 #     location / {
 #         ssl_preread on;
 #         proxy_pass frps:443;

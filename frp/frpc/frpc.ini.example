@@ -16,24 +16,24 @@ local_port = 22
 # frps开放的端口之一。我随便写了个3505。
 remote_port = 3505
 
-[http-www.sample.cn]
+[http-foo.domain.com]
 # 测试http
 type = http
 # 本地ip
 local_ip = 192.168.0.4
 # 比如，某个Docker应用的端口号。Emby,jellyfin之类的有Web界面的应用。
 local_port = 6533
-custom_domains = httptest.sample.com
+custom_domains = httpfoo.domain.com
 
-[https-@.sample.cn]
+[https-@.domain.com]
 # 测试https
 type = https
 # 填写域名
-custom_domains = httpstest.sample.com
+custom_domains = httpsfoo.domain.com
 plugin = https2http
 plugin_local_addr = 192.168.0.4:6533
 # HTTPS 证书相关的配置
-plugin_crt_path = /frp/sample.com.pem
-plugin_key_path = /frp/sample.com.key
+plugin_crt_path = /frp/domain.com.pem
+plugin_key_path = /frp/domain.com.key
 plugin_host_header_rewrite = 192.168.0.4
 plugin_header_X-From-Where = frp

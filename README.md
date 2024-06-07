@@ -16,10 +16,10 @@ sh install.sh
 
 ```bash
 # nginx 1.14
-# redis  4.x | 5.x(默认) | 6.x
+# redis 4.x | 5.x(默认) | 6.x
 # mysql 5.7.40(默认) | 8.0
-# frps  0.47.0
-# frpc  0.47.0
+# frps  0.58.1
+# frpc  0.58.1
 ```
 
 ## build

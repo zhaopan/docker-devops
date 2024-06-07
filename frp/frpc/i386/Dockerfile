@@ -1,7 +1,7 @@
 ARG FRP_VERSION
 ARG ZP_MAINTAINER
 
-FROM i386/alpine:3.15
+FROM i386/alpine:3.20
 
 ARG FRP_VERSION
 ARG ZP_MAINTAINER
@@ -14,7 +14,7 @@ RUN cd /root \
     &&  cd frp_${FRP_VERSION}_linux_386/ \
     &&  cp frpc /usr/bin/ \
     &&  mkdir -p /etc/frp \
-    &&  cp frpc.ini /etc/frp \
+    #&&  cp frpc.ini /etc/frp \
     &&  cd /root \
     &&  rm frp_${FRP_VERSION}_linux_386.tar.gz \
     &&  rm -rf frp_${FRP_VERSION}_linux_386/

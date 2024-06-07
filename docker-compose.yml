@@ -1,4 +1,4 @@
-version: "3.8"
+version: "2"
 services:
 
   ######## nginx ########
@@ -68,7 +68,7 @@ services:
       backend:
         ipv4_address: ${MYSQL_IP}
 
-######## frps ########
+  ######## frps ########
   frps:
     build:
       context: ./frp/frps/${FRPS_ARCH}
@@ -109,7 +109,7 @@ services:
     restart: always
     volumes:
       - ${FRPC_INI_PATH}:/etc/frp/frpc.ini
-      - ${FRPC_LOG_PATH}:/var/log/frps.log
+      - ${FRPC_LOG_PATH}:/var/log/frpc.log
     networks:
       backend:
         ipv4_address: ${FRPC_IP}
@@ -225,3 +225,4 @@ networks:
     ipam:
       config:
         - subnet: ${SUBNET}
+

@@ -1,7 +1,7 @@
 ARG FRP_VERSION
 ARG ZP_MAINTAINER
 
-FROM amd64/alpine:3.15
+FROM amd64/alpine:3.20
 
 ARG FRP_VERSION
 ARG ZP_MAINTAINER
@@ -14,7 +14,7 @@ RUN cd /root \
     &&  cd frp_${FRP_VERSION}_linux_amd64/ \
     &&  cp frps /usr/bin/ \
     &&  mkdir -p /etc/frp \
-    &&  cp frps.ini /etc/frp \
+    #&&  cp frps.ini /etc/frp \
     &&  cd /root \
     &&  rm frp_${FRP_VERSION}_linux_amd64.tar.gz \
     &&  rm -rf frp_${FRP_VERSION}_linux_amd64/
