@@ -31,7 +31,7 @@ services:
         - VERSION=${REDIS_VERSION}
         - ZP_MAINTAINER=${ZP_MAINTAINER}
     container_name: redis
-    command: redis-server /etc/redis/redis.conf
+    #command: redis-server /etc/redis/redis.conf
     restart: always
     ports:
       - ${REDIS_PORT}:6379
