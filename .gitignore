@@ -5,6 +5,7 @@ data/
 .DS_Store
 www/
 nginx/conf.d/*.conf
+nginx/ssl/
 frpc.ini
 frps.ini
 frpd.lock
