@@ -7,17 +7,18 @@ services:
       context: ./nginx
       args:
         - ZP_MAINTAINER=${ZP_MAINTAINER}
-    container_name: nginx
+    image: ${AUTHOR}/${NGINX_NAME}:${TAG}
+    container_name: ${NGINX_NAME}
+    restart: always
     privileged: true
     ports:
       - ${NGINX_HOST_HTTP_PORT}:80
       - ${NGINX_HOST_HTTPS_PORT}:443
-    restart: always
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/ssl:/etc/nginx/ssl
-      - ${WEB_ROOT_PATH}:/var/www/
+      - ${NGINX_ROOT_PATH}:/var/www/
       - ${NGINX_LOG_PATH}:/var/log/nginx/
     networks:
       backend:
@@ -30,9 +31,10 @@ services:
       args:
         - VERSION=${REDIS_VERSION}
         - ZP_MAINTAINER=${ZP_MAINTAINER}
-    container_name: redis
-    #command: redis-server /etc/redis/redis.conf
+    image: ${AUTHOR}/${REDIS_NAME}:${TAG}
+    container_name: ${REDIS_NAME}
     restart: always
+    privileged: true
     ports:
       - ${REDIS_PORT}:6379
     volumes:
@@ -49,16 +51,15 @@ services:
       args:
         - VERSION=${MYSQL_VERSION}
         - ZP_MAINTAINER=${ZP_MAINTAINER}
-    container_name: mysql
-    # M1 需要指定 platform
+    image: ${AUTHOR}/${MYSQL_NAME}:${TAG}
+    container_name: ${MYSQL_NAME}
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - TZ=${MYSQL_TIMEZONE}
     volumes:
-      # mysql默认配置文件
-      - ${MYSQL_CONF_PATH}:/etc/mysql/conf.d/docker.cnf
-      # 数据文件
+      - ${MYSQL_CONF_PATH}:/etc/mysql/conf.d/docker.cnf:ro
       - ${MYSQL_DATA_PATH}:/var/lib/mysql
+    # M1 需要指定 platform
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     privileged: true
@@ -75,9 +76,10 @@ services:
       args:
         - FRP_VERSION=${FRP_VERSION}
         - ZP_MAINTAINER=${ZP_MAINTAINER}
-    container_name: frps
-    privileged: true
+    image: ${AUTHOR}/${FRPS_NAME}:${TAG}
+    container_name: ${FRPS_NAME}
     restart: always
+    privileged: true
     ports:
       # frps服务端口
       - '6500:7000'
@@ -91,7 +93,7 @@ services:
       # 开放给frpc的端口
       - '3505-3510:3505-3510'
     volumes:
-      - ${FRPS_INI_PATH}:/etc/frp/frps.ini
+      - ${FRPS_INI_PATH}:/etc/frp/frps.toml
       - ${FRPS_LOG_PATH}:/var/log/frps.log
     networks:
       backend:
@@ -104,51 +106,61 @@ services:
       args:
         - FRP_VERSION=${FRP_VERSION}
         - ZP_MAINTAINER=${ZP_MAINTAINER}
-    container_name: frpc
-    privileged: true
+    image: ${AUTHOR}/${FRPC_NAME}:${TAG}
+    container_name: ${FRPC_NAME}
     restart: always
+    privileged: true
     volumes:
-      - ${FRPC_INI_PATH}:/etc/frp/frpc.ini
+      - ${FRPC_INI_PATH}:/etc/frp/frpc.toml
       - ${FRPC_LOG_PATH}:/var/log/frpc.log
     networks:
       backend:
         ipv4_address: ${FRPC_IP}
 
-  ######## wordpress1 ########
-  wordpress1:
-    container_name: wordpress1
-    image: wordpress
-    privileged: true
+  ######## wordpress ########
+  wp:
+    image: wordpress:latest
+    container_name: wp
     restart: always
+    privileged: true
+    ports:
+      - ${WP_PORT}:80
+    volumes:
+      - ${WP_CONF_PATH}:/usr/local/etc/php/conf.d/conf.ini
+      - ${WP_ROOT_PATH}:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_NAME: "${WP_DB_NAME}"
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: "${WP_DB_ROOT_PASSWORD}"
     depends_on:
       - mysql
     links:
       - mysql
-    ports:
-      - '8081:80'
-    volumes:
-      - ${WP_ROOT_PATH1}:/var/www/html/
     networks:
       backend:
-        ipv4_address: ${WP_IP1}
+        ipv4_address: ${WP_IP}
 
-  ######## wordpress2 ########
-  wordpress2:
-    container_name: wordpress2
-    image: wordpress
-    privileged: true
+  ###### wordpress-cli ######
+  wpcli:
+    image: wordpress:cli
+    container_name: wpcli
     restart: always
+    privileged: true
+    volumes:
+      - ${WP_CONF_PATH}:/usr/local/etc/php/conf.d/conf.ini
+      - ${WP_ROOT_PATH}:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_NAME: "${WP_DB_NAME}"
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: "${WP_DB_ROOT_PASSWORD}"
     depends_on:
       - mysql
-    links:
-      - mysql
-    ports:
-      - '8082:80'
-    volumes:
-      - ${WP_ROOT_PATH2}:/var/www/html/
+      - wp
     networks:
       backend:
-        ipv4_address: ${WP_IP2}
+        ipv4_address: ${WP_CLI_IP}
 
   ######## goapp110 ########
   goapp110:
@@ -157,16 +169,16 @@ services:
       args:
         - VERSION=${GO_VERSION}
         - ZP_MAINTAINER=${ZP_MAINTAINER}
-    container_name: goapp110
-    environment:
-      - TZ=${GO_TIMEZONE}
-    privileged: true
+    image: ${AUTHOR}/${GOAPP110_NAME}:${TAG}
+    container_name: ${GOAPP110_NAME}
     restart: always
-
+    privileged: true
     ports:
       - '8000:80'
     volumes:
       - ${GO_APPPATH}:/var/www/goapp/
+    environment:
+      - TZ=${GO_TIMEZONE}
     networks:
       backend:
         ipv4_address: ${GOAPP_IP10}
@@ -178,19 +190,20 @@ services:
       args:
         - VERSION=${GO_VERSION}
         - ZP_MAINTAINER=${ZP_MAINTAINER}
-    container_name: goapp111
-    environment:
-      - TZ=${GO_TIMEZONE}
-    privileged: true
+    image: ${AUTHOR}/${GOAPP111_NAME}:${TAG}
+    container_name: ${GOAPP111_NAME}
     restart: always
+    privileged: true
+    ports:
+      - '8000:80'
     depends_on:
       - mysql
     links:
       - mysql
-    ports:
-      - '8000:80'
     volumes:
       - ${GO_APPPATH}:/var/www/goapp/
+    environment:
+      - TZ=${GO_TIMEZONE}
     networks:
       backend:
         ipv4_address: ${GOAPP_IP11}
@@ -202,19 +215,20 @@ services:
       args:
         - VERSION=${GO_VERSION}
         - ZP_MAINTAINER=${ZP_MAINTAINER}
-    container_name: goapp112
-    environment:
-      - TZ=${GO_TIMEZONE}
-    privileged: true
+    image: ${AUTHOR}/${GOAPP112_NAME}:${TAG}
+    container_name: ${GOAPP112_NAME}
     restart: always
+    privileged: true
+    ports:
+      - '8000:80'
     depends_on:
       - mysql
     links:
       - mysql
-    ports:
-      - '8000:80'
     volumes:
       - ${GO_APPPATH}:/var/www/goapp/
+    environment:
+      - TZ=${GO_TIMEZONE}
     networks:
       backend:
         ipv4_address: ${GOAPP_IP12}

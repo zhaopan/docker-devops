@@ -1,3 +1,3 @@
-module github.com/zhaopan/docker-devops/golang/backend
+module zhaopan/x/golang
 
 go 1.18

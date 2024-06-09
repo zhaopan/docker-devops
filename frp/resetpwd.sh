@@ -6,13 +6,13 @@ then
     DASHBOARD=$(openssl rand -base64 9)
 
     # 修改服务端TOKEN
-    sed -i "/^token/c token = ${TOKEN}" frps/frps.ini
+    sed -i "/^token/c token = ${TOKEN}" frps/frps.toml
 
     # 修改客户端TOKEN
-    sed -i "/^token/c token = ${TOKEN}" frpc/frpc.ini
+    sed -i "/^token/c token = ${TOKEN}" frpc/frpc.toml
 
     # 修改管理密码
-    sed -i "/^dashboard_pwd/c dashboard_pwd = ${DASHBOARD}" frps/frps.ini
+    sed -i "/^dashboard_pwd/c dashboard_pwd = ${DASHBOARD}" frps/frps.toml
 
     echo "TOKEN: ${TOKEN}"
     echo "DASHBOARD: ${DASHBOARD}"

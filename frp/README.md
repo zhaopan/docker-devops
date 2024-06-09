@@ -16,10 +16,10 @@ sh install.sh
 
 ```bash
 # docker start frps
-docker run --restart=always --network host -d -v /etc/frp/frps.ini:/etc/frp/frps.ini --name frps zhaopan/frps
+docker run --restart=always --network host -d -v /etc/frp/frps.toml:/etc/frp/frps.toml --name frps zhaopan/frps
 
 # docker start frpc
-docker run --restart=always --network host -d -v /etc/frp/frpc.ini:/etc/frp/frpc.ini --name frpc zhaopan/frpc
+docker run --restart=always --network host -d -v /etc/frp/frpc.toml:/etc/frp/frpc.toml --name frpc zhaopan/frpc
 ```
 
 ## nginx-proxy
@@ -36,7 +36,7 @@ cp nginx/conf.d/frpc.conf.example nginx/conf.d/frpc.conf
 
 ## windows frpc
 
-frpc.ini
+frpc.toml
 
 eg:
 

@@ -7,8 +7,8 @@ else
     mkdir -p ../logs/frps/ ../logs/frpc/
     touch ../logs/frps/frps.log ../logs/frpc/frpc.log
 
-    cp -rf frps/frps.ini.example frps/frps.ini
-    cp -rf frpc/frpc.ini.example frpc/frpc.ini
+    cp -rf frps/frps.toml.example frps/frps.toml
+    cp -rf frpc/frpc.toml.example frpc/frpc.toml
 
     touch frpd.lock
 

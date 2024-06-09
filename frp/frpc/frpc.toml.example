@@ -3,7 +3,7 @@
 server_addr = 0.0.0.0
 # 填写服务器frps的主端口号，本示范中是6500
 server_port = 6500
-# 与frps.ini中的token要一一对应
+# 与frps.toml中的token要一一对应
 token = XsZ75UtIDuSD
 
 [ssh-3505]
