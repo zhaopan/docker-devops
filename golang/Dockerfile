@@ -1,9 +1,6 @@
-ARG VERSION
-ARG ZP_MAINTAINER
+ARG VERSION=latest
 
 FROM golang:${VERSION} AS builder
-
-ARG ZP_MAINTAINER
 
 LABEL stage=gobuilder
 
@@ -19,8 +16,6 @@ COPY . .
 RUN go build -ldflags="-s -w" -o /app/main ./main.go
 
 FROM alpine
-
-LABEL maintainer=${ZP_MAINTAINER}
 
 RUN apk update --no-cache && apk add --no-cache ca-certificates tzdata
 COPY --from=builder /usr/share/zoneinfo/$TZ /usr/share/zoneinfo/$TZ

@@ -3,6 +3,7 @@
 ## Usage
 
 ### init
+
 copy default.conf
 
 ```bash
@@ -10,10 +11,16 @@ copy default.conf
 cp default.conf.example default.conf
 ```
 
+docker 源相关
+
+```bash
+# debian
+/etc/apt/sources.list.d/debian.sources
+```
+
 ssl cert 相关
 
 ```bash
-
 # 证书权限问题
 chown -R root:root nginx/ssl
 chmod -R 600 nginx/ssl

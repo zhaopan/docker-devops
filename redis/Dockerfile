@@ -1,15 +1,11 @@
-ARG VERSION
-ARG ZP_MAINTAINER
+ARG REDIS_VER=latest
 
-FROM redis:${VERSION}
-
-ARG ZP_MAINTAINER
-
-LABEL maintainer=${ZP_MAINTAINER}
+FROM redis:${REDIS_VER}
 
 # 复制时区配置
 ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
 
 CMD [ "redis-server"]
 

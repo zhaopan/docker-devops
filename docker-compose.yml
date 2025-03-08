@@ -1,12 +1,9 @@
-version: "2"
 services:
 
   ######## nginx ########
   nginx:
     build:
       context: ./nginx
-      args:
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
     image: ${AUTHOR}/${NGINX_NAME}:${TAG}
     container_name: ${NGINX_NAME}
     restart: always
@@ -29,8 +26,7 @@ services:
     build:
       context: ./redis
       args:
-        - VERSION=${REDIS_VERSION}
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
+        - REDIS_VER=${REDIS_VERSION}
     image: ${AUTHOR}/${REDIS_NAME}:${TAG}
     container_name: ${REDIS_NAME}
     restart: always
@@ -50,7 +46,6 @@ services:
       context: ./mysql
       args:
         - VERSION=${MYSQL_VERSION}
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
     image: ${AUTHOR}/${MYSQL_NAME}:${TAG}
     container_name: ${MYSQL_NAME}
     environment:
@@ -74,14 +69,12 @@ services:
     build:
       context: ./mongo
       args:
-        - VERSION=${MONGO_VER}
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
+        - MONGO_VERSION=${MONGO_VERSION}
     image: ${AUTHOR}/${MONGO_NAME}:${TAG}
     container_name: ${MONGO_NAME}
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-      - TZ=${MONGO_TIMEZONE}
     volumes:
       - ${MONGO_CONF_PATH}:/etc/mongod.conf:ro
       - ${MONGO_PATH}:/data/db:ro
@@ -103,7 +96,6 @@ services:
       context: ./frp/frps/${FRPS_ARCH}
       args:
         - FRP_VERSION=${FRP_VERSION}
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
     image: ${AUTHOR}/${FRPS_NAME}:${TAG}
     container_name: ${FRPS_NAME}
     restart: always
@@ -133,7 +125,6 @@ services:
       context: ./frp/frpc/${FRPC_ARCH}
       args:
         - FRP_VERSION=${FRP_VERSION}
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
     image: ${AUTHOR}/${FRPC_NAME}:${TAG}
     container_name: ${FRPC_NAME}
     restart: always
@@ -196,8 +187,6 @@ services:
       context: ./golang
       args:
         - VERSION=${GO_VERSION}
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
-    image: ${AUTHOR}/${GOAPP110_NAME}:${TAG}
     container_name: ${GOAPP110_NAME}
     restart: always
     privileged: true
@@ -217,8 +206,6 @@ services:
       context: ./golang
       args:
         - VERSION=${GO_VERSION}
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
-    image: ${AUTHOR}/${GOAPP111_NAME}:${TAG}
     container_name: ${GOAPP111_NAME}
     restart: always
     privileged: true
@@ -236,35 +223,36 @@ services:
       backend:
         ipv4_address: ${GOAPP_IP11}
 
-  ######## goapp112 ########
-  goapp112:
+  ######## gogs ########
+  gogs:
     build:
-      context: ./golang
+      context: ./gogs
       args:
-        - VERSION=${GO_VERSION}
-        - ZP_MAINTAINER=${ZP_MAINTAINER}
-    image: ${AUTHOR}/${GOAPP112_NAME}:${TAG}
-    container_name: ${GOAPP112_NAME}
+        - GOGS_VERSION=${GOGS_VERSION}
+    image: ${AUTHOR}/${GOGS_NAME}:${TAG}
+    container_name: ${GOGS_NAME}
     restart: always
     privileged: true
     ports:
-      - '8000:80'
+      - ${GOGS_SSH_PORT}:22
+      - ${GOGS_WEB_PORT}:3000
     depends_on:
       - mysql
+      - nginx
     links:
       - mysql
     volumes:
-      - ${GO_APPPATH}:/var/www/goapp/
-    environment:
-      - TZ=${GO_TIMEZONE}
+      - ${GOGS_DATA_PATH}:/data/gogs
+
     networks:
       backend:
-        ipv4_address: ${GOAPP_IP12}
+        ipv4_address: ${GOGS_IP}
 
 networks:
   backend:
+    name: devops-proxy-backend
     driver: bridge
+    external: true
     ipam:
       config:
         - subnet: ${SUBNET}
-

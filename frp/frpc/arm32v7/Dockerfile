@@ -1,12 +1,6 @@
-ARG FRP_VERSION
-ARG ZP_MAINTAINER
+ARG FRP_VERSION=0.58.1
 
 FROM arm32v7/alpine:3.20
-
-ARG FRP_VERSION
-ARG ZP_MAINTAINER
-
-LABEL maintainer=${ZP_MAINTAINER}
 
 RUN cd /root \
     &&  wget --no-check-certificate -c https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_arm.tar.gz \

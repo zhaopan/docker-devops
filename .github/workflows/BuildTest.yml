@@ -8,30 +8,23 @@ on:
 
 jobs:
   buildx:
-    #timeout-minutes: 10
     runs-on: ubuntu-latest
 
     steps:
       -
         name: Checkout
         uses: actions/checkout@v4
+
       -
         # Add support for more platforms with QEMU (optional)
         # https://github.com/docker/setup-qemu-action
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      -
-        name: Copy .env
-        run: cp .env.example .env
-
-      -
-        name: Start containers
-        run: docker-compose -f "docker-compose.yml" up -d --build nginx redis frps mysql
-
-      -
-        name: Down tests
-        run: docker-compose -f "docker-compose.yml" down nginx redis frps mysql
+        run:
+          cp .env.example .env &&
+          docker-compose up -d --build nginx redis mysql mongo gogs &&
+          docker-compose down nginx redis mysql mongo gogs
