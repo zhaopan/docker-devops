@@ -69,6 +69,34 @@ services:
       backend:
         ipv4_address: ${MYSQL_IP}
 
+  ######## mongo ########
+  mongo:
+    build:
+      context: ./mongo
+      args:
+        - VERSION=${MONGO_VER}
+        - ZP_MAINTAINER=${ZP_MAINTAINER}
+    image: ${AUTHOR}/${MONGO_NAME}:${TAG}
+    container_name: ${MONGO_NAME}
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - TZ=${MONGO_TIMEZONE}
+    volumes:
+      - ${MONGO_CONF_PATH}:/etc/mongod.conf:ro
+      - ${MONGO_PATH}:/data/db:ro
+    command:
+      - '--auth'
+      - '-f'
+      - '/etc/mongod.conf'
+    restart: always
+    privileged: true
+    ports:
+      - ${MONGO_PORT}:27017
+    networks:
+      backend:
+        ipv4_address: ${MONGO_IP}
+
   ######## frps ########
   frps:
     build:
