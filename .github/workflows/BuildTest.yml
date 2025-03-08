@@ -30,8 +30,8 @@ jobs:
 
       -
         name: Start containers
-        run: docker-compose -f "docker-compose.yml" up -d --build nginx redis mongo mysql
+        run: docker-compose -f "docker-compose.yml" up -d --build nginx redis mysql
 
       -
         name: Down tests
-        run: docker-compose -f "docker-compose.yml" down nginx redis mongo mysql
+        run: docker-compose -f "docker-compose.yml" down nginx redis mysql
