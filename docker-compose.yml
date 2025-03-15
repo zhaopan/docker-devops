@@ -231,6 +231,49 @@ services:
       backend:
         ipv4_address: ${GOGS_IP}
 
+  ######## zentao ########
+  zentao:
+    # build:
+    #   context: ./zentao
+    # image: ${AUTHOR}/zentao:latest
+    image: easysoft/zentao
+    container_name: zentao
+    pull_policy: always
+    restart: always
+
+    environment:
+      - ZT_MYSQL_HOST=mysql
+      - ZT_MYSQL_PORT=3306
+      - ZT_MYSQL_USER=root
+      - ZT_MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - ZT_MYSQL_DB=zentao
+      # 从21.3版本开始，如果已经设置了redis相关环境变量自动开启redis session缓存，可不用配置如下环境变量
+      - PHP_SESSION_TYPE=redis
+      - PHP_SESSION_PATH=tcp://redis:6379
+
+      - ZT_CACHE_ENABLE=true
+      - ZT_CACHE_TYPE=redis
+      - ZT_CACHE_SCOPE=private
+      - ZT_CACHE_LIFETIME=0
+      - PHP_MAX_EXECUTION_TIME=120
+      - PHP_MEMORY_LIMIT=512M
+      - PHP_POST_MAX_SIZE=128M
+      - PHP_UPLOAD_MAX_FILESIZE=128M
+    ports:
+      - '10880:80'
+    volumes:
+      - ${ZENTAO_DATA_PATH}:/data
+    depends_on:
+      - mysql
+      - redis
+    links:
+      - mysql
+      - redis
+    networks:
+      backend:
+        ipv4_address: ${ZENTAO_IP}
+
 networks:
   backend:
+    name: backend
     external: true
