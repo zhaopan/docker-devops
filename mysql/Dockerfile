@@ -1,6 +1,6 @@
-ARG VERSION=latest
+ARG MYSQL_VERSION=latest
 
-FROM mysql/mysql-server:${VERSION}
+FROM mysql/mysql-server:${MYSQL_VERSION}
 
 # 复制时区配置
 ENV TZ=Asia/Shanghai

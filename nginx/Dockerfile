@@ -1,4 +1,5 @@
-FROM nginx:1.14
+ARG NGINX_VERSION=latest
+FROM nginx:${NGINX_VERSION}
 
 # 更换镜像
 #RUN rm -rf /etc/apt/sources.list
