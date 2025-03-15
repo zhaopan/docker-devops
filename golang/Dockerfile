@@ -1,6 +1,6 @@
-ARG VERSION=latest
+ARG GO_VERSION=latest
 
-FROM golang:${VERSION} AS builder
+FROM golang:${GO_VERSION} AS builder
 
 LABEL stage=gobuilder
 
@@ -17,9 +17,14 @@ RUN go build -ldflags="-s -w" -o /app/main ./main.go
 
 FROM alpine
 
-RUN apk update --no-cache && apk add --no-cache ca-certificates tzdata
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
+
+RUN apk update --no-cache \
+    && apk add --no-cache ca-certificates tzdata
 COPY --from=builder /usr/share/zoneinfo/$TZ /usr/share/zoneinfo/$TZ
-ENV TZ $TZ
+
 WORKDIR /app
 
 COPY --from=builder /app/main /app/main

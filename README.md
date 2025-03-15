@@ -5,6 +5,8 @@
 ```bash
 # copy 配置文件，根据自己需求修改配置文件
 cp .env.example .env
+chmod +x init.sh
+sh init.sh
 
 # 若需要安装frp，则要执行 frp/install.sh
 cd frp
@@ -18,8 +20,8 @@ sh install.sh
 # nginx 1.14
 # redis 4.x | 5.x(默认) | 6.x
 # mysql 5.7.40(默认) | 8.0
-# frps  0.58.1
-# frpc  0.58.1
+# frps 0.58.1
+# frpc 0.58.1
 ```
 
 ## build
