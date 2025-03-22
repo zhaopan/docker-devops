@@ -226,7 +226,6 @@ services:
       - mysql
     volumes:
       - ${GOGS_DATA_PATH}:/data/gogs
-
     networks:
       backend:
         ipv4_address: ${GOGS_IP}
@@ -258,7 +257,7 @@ services:
       - PHP_POST_MAX_SIZE=128M
       - PHP_UPLOAD_MAX_FILESIZE=128M
     ports:
-      - '10880:80'
+      - ${ZENTAO_PORT}:80
     volumes:
       - ${ZENTAO_DATA_PATH}:/data
     depends_on:
