@@ -240,7 +240,6 @@ services:
     container_name: zentao
     pull_policy: always
     restart: always
-
     environment:
       - ZT_MYSQL_HOST=mysql
       - ZT_MYSQL_PORT=3306
@@ -250,7 +249,6 @@ services:
       # 从21.3版本开始，如果已经设置了redis相关环境变量自动开启redis session缓存，可不用配置如下环境变量
       - PHP_SESSION_TYPE=redis
       - PHP_SESSION_PATH=tcp://redis:6379
-
       - ZT_CACHE_ENABLE=true
       - ZT_CACHE_TYPE=redis
       - ZT_CACHE_SCOPE=private
