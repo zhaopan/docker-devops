@@ -102,7 +102,7 @@ services:
     build:
       context: ./frp/frps/${FRPS_ARCH}
       args:
-        - FRP_VERSION=${FRP_VERSION}
+        - FRP_VERSION: ${FRP_VERSION}
     image: ${AUTHOR}/${FRPS_NAME}:${FRP_VERSION}
     container_name: ${FRPS_NAME}
     restart: always
@@ -131,7 +131,7 @@ services:
     build:
       context: ./frp/frpc/${FRPC_ARCH}
       args:
-        - FRP_VERSION=${FRP_VERSION}
+        - FRP_VERSION: ${FRP_VERSION}
     image: ${AUTHOR}/${FRPC_NAME}:${FRP_VERSION}
     container_name: ${FRPC_NAME}
     restart: always
