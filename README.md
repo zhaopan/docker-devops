@@ -31,7 +31,7 @@ sh install.sh
 docker-compose build <services-names>
 ```
 
-## run | restart | stop | down | rebuild
+## docker-compose `build` | `up` | `stop` | `down`
 
 ```bash
 # start 首次执行耗时较久，耐心等待
@@ -51,6 +51,24 @@ docker-compose down
 
 # down -rmi 停止 + 删除容器 + 删除镜像
 docker-compose down --rmi all
+```
+
+## make `build` | `up` | `stop` | `down`
+
+[Install make](https://github.com/zhaopan/pub/01.home/make.md)
+
+```bash
+# build
+make build
+
+# up
+make up
+
+# stop
+make stop
+
+# down
+make down
 ```
 
 ## thanks
