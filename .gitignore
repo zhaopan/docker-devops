@@ -9,4 +9,5 @@ nginx/ssl/
 frpc.toml
 frps.toml
 frpd.lock
+.idea/
 .vscode/
