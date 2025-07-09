@@ -85,10 +85,10 @@ services:
     volumes:
       - ${MONGO_CONF_PATH}:/etc/mongod.conf:ro
       - ${MONGO_PATH}:/data/db
-    command:
-      - '--auth'
-      - '-f'
-      - '/etc/mongod.conf'
+    # command:
+    #   - '--auth'
+    #   - '-f'
+    #   - '/etc/mongod.conf'
     restart: always
     privileged: true
     ports:
