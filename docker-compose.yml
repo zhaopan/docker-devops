@@ -84,7 +84,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - ${MONGO_CONF_PATH}:/etc/mongod.conf:ro
-      - ${MONGO_PATH}:/data/db:ro
+      - ${MONGO_PATH}:/data/db
     command:
       - '--auth'
       - '-f'
